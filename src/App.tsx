@@ -9,6 +9,8 @@ function NotFound() {
 }
 
 export default function App() {
+
+  console.log("App.tsx");
   return (
     <Router>
       <Routes>
