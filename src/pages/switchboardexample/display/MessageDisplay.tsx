@@ -16,7 +16,7 @@ const MessageBox: React.FC = () => {
         );
       } else {
         return (
-          <ImageBubble key={index} imageUrl={message.url} />
+          <ImageBubble key={index} imageUrl={message.URL} />
         );
       }
     });

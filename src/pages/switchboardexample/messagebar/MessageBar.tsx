@@ -1,34 +1,36 @@
 import React, { useContext, useState, useEffect } from "react";
 import "./MessageBar.css";
 import { SwitchboardContext } from "../../../context/switchboard/switchboardContext";
-import SwitchboardContextType, { image } from "../../../context/switchboard/switchboardContextType";
+import SwitchboardContextType from "../../../context/switchboard/switchboardContextType";
 import useReadClipboard from "../../../hooks/useReadClipboard";
 import { Button, Form } from "antd";
 import ImageBar from "./ImageBar";
-import PlainTextArea from "./PlainTextArea";
+import TextArea from "antd/es/input/TextArea";
 
 const MessageBar: React.FC = () => {
-  const [message, setMessage] = useState("");
+  const [nextMessage, setNextMessage] = useState("");
+  // Context is used as a simplified version of redux to manage the state of the messages
   const { addMessage } = useContext(SwitchboardContext) as SwitchboardContextType;
-  const {clipboardImages, handleReadClipboard, clearImages, removeImage} = useReadClipboard();
   const [form] = Form.useForm();
+
+  // see useReadClipboard.tsx for more information
+  const {clipboardImages, handleReadClipboard, clearImages, removeImage} = useReadClipboard();
 
   // Handle changes in the text input
   const handleMessageChange = (value: string) => {
-    setMessage(value);
+    setNextMessage(value);
   };
 
   // Handle sending the message (text or image)
   const handleSend = () => {
-    if (message.trim() !== "") {
-      addMessage(message); // Send the text message
-      setMessage(""); // Clear text field
+    if (nextMessage.trim() !== "") {
+      addMessage(nextMessage); // Send the text message
+      setNextMessage(""); // Clear text field
     }
 
     // Send the clipboard image if there are any
     clipboardImages.forEach((image) => {
-      const imageMessage: image = { url: image.URL };
-      addMessage(imageMessage); // Send the image message
+      addMessage(image); // Send the image message
     });
     
     clearImages(); // Clear clipboard images
@@ -60,7 +62,17 @@ const MessageBar: React.FC = () => {
           name="inputText"
         >
           <ImageBar images={clipboardImages} removeImage={removeImage}/>
-          <PlainTextArea handleMessageChange={handleMessageChange} form={form} value={message}/>
+          <TextArea
+                placeholder="Enter message..."
+                value={nextMessage} // Bind the value prop
+                onPressEnter={(event): void => {
+                    if (!event.shiftKey) {
+                        event.preventDefault();
+                        form.submit();
+                    }
+                }}
+                onChange={(event): void => handleMessageChange(event.target.value)}
+            />
         </Form.Item>
         <Form.Item>
             <Button

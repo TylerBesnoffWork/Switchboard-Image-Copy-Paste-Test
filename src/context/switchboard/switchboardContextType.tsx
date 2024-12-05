@@ -1,11 +1,9 @@
-interface SwitchboardContextType {
-    messages: (image | string)[];
-    addMessage: (message: image | string) => void;
-    clearMessages: () => void;
-}
+import { ImageProps } from "../../hooks/useReadClipboard";
 
-export interface image {
-    url: string;
+interface SwitchboardContextType {
+    messages: (ImageProps | string)[];
+    addMessage: (message: ImageProps | string) => void;
+    clearMessages: () => void;
 }
 
 export default SwitchboardContextType;

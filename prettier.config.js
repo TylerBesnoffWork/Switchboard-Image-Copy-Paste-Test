@@ -21,7 +21,7 @@ module.exports = {
     printWidth: 80,
   
     // Set the number of spaces per indentation level
-    tabWidth: 2,
+    tabWidth: 4,
   
     // Use spaces instead of tabs
     useTabs: false,
