@@ -9,6 +9,7 @@ function NotFound() {
 }
 
 export default function App() {
+  console.log("test");
   return (
     <Router>
       <Routes>
