@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect, useCallback } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./MessageBar.css";
 import { SwitchboardContext } from "../../../context/switchboard/switchboardContext";
 import SwitchboardContextType, { image } from "../../../context/switchboard/switchboardContextType";
 import useReadClipboard from "../../../hooks/useReadClipboard";
-import { Button, Form, ImageProps } from "antd";
-import PlainTextArea from "./plaintextarea";
+import { Button, Form } from "antd";
 import ImageBar from "./ImageBar";
+import PlainTextArea from "./PlainTextArea";
 
 const MessageBar: React.FC = () => {
   const [message, setMessage] = useState("");
@@ -33,10 +33,6 @@ const MessageBar: React.FC = () => {
     
     clearImages(); // Clear clipboard images
   };
-
-  const getDefaultValue = useCallback(() => {
-    return message.length > 0 ? message : undefined;
-  }, [message]);
 
   // Add paste event listener on component mount and cleanup on unmount
   useEffect(() => {
