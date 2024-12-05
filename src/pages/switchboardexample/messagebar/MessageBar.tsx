@@ -1,17 +1,20 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import "./MessageBar.css";
 import { SwitchboardContext } from "../../../context/switchboard/switchboardContext";
 import SwitchboardContextType from "../../../context/switchboard/switchboardContextType";
 import useReadClipboard, { ImageProps } from "../../../hooks/useReadClipboard";
 import { Button, Form } from "antd";
 import ImageBar from "./ImageBar";
-import TextArea from "antd/es/input/TextArea";
+import TextArea, { TextAreaRef } from "antd/es/input/TextArea";
 
 const MessageBar: React.FC = () => {
+  const messageInputRef = useRef<TextAreaRef>(null);
+
   const [nextMessage, setNextMessage] = useState("");
   // Context is used as a simplified version of redux to manage the state of the messages
   const { addMessage } = useContext(SwitchboardContext) as SwitchboardContextType;
   const [form] = Form.useForm();
+  const [messageInputFocused, setMessageInputFocused] = useState(false);
 
     // State to hold images from the clipboard
   // This is currently managed in the FileUploadModel which is only when the user uploads a file
@@ -42,11 +45,6 @@ const MessageBar: React.FC = () => {
     }
   }
 
-  // Handle changes in the text input
-  const handleMessageChange = (value: string) => {
-    setNextMessage(value);
-  };
-
   // Handle sending the message (text or image)
   const handleSend = () => {
     if (nextMessage.trim() !== "") {
@@ -65,10 +63,13 @@ const MessageBar: React.FC = () => {
   // Add paste event listener on component mount and cleanup on unmount
   useEffect(() => {
     const handlePaste = async () => {
+      // Make sure that the message input ref is available and the message input is focused
+      if(!messageInputRef.current || !messageInputFocused) return;
+
       const { clipboardImages } = await handleReadClipboard();
 
       if (clipboardImages) {
-        setNextImages(clipboardImages);
+        setNextImages((previousImages) => [...previousImages, ...clipboardImages]);
       }
     };
 
@@ -80,7 +81,6 @@ const MessageBar: React.FC = () => {
       // Clean up the images when the component is unmounted
       // This may possibly need to accommodate refreshing? If the component is unmounted and remounted the images will be lost
       nextImages.forEach((img) => URL.revokeObjectURL(img.URL));
-      setNextImages([]);
     };
   }, [handleReadClipboard]);
 
@@ -96,18 +96,24 @@ const MessageBar: React.FC = () => {
           className="message-bar-textarea"
           name="inputText"
         >
-          <ImageBar images={nextImages} removeImage={removeImage}/>
-          <TextArea
+          <>
+            <ImageBar images={nextImages} removeImage={removeImage}/>
+            <TextArea
                 placeholder="Enter message..."
-                value={nextMessage} // Bind the value prop
+                value={nextMessage}
                 onPressEnter={(event): void => {
                     if (!event.shiftKey) {
                         event.preventDefault();
                         form.submit();
                     }
                 }}
-                onChange={(event): void => handleMessageChange(event.target.value)}
+                onChange={(event): void => setNextMessage(event.target.value)}
+                onFocus={() => setMessageInputFocused(true)}
+                onBlur={() => setMessageInputFocused(false)}  
+                ref={messageInputRef}
+
             />
+          </>
         </Form.Item>
         <Form.Item>
             <Button

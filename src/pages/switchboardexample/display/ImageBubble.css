@@ -1,13 +1,18 @@
 .image-bubble {
-    max-width: 100%;
-    margin: 10px;
+    max-width: fit-content;
+    padding: 10px;
     border-radius: 15px;
-    display: inline-block;  /* Allows image to be inline with text or other elements */
+    margin: 10px;
+    font-size: 14px;
+    word-wrap: break-word;
+    background-color: #e1f5fe;
     align-self: flex-start;
+    border: 1px solid #b3e5fc;
+    color: #0277bd;
   }
   
-  .bubble-image {
-    max-width: 30%;
+  .image {
+    max-width: 100%;
     height: auto;
     border-radius: 10px;
   }

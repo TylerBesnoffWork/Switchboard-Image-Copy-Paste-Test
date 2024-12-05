@@ -4,14 +4,15 @@ import SwitchboardContextType from "../../context/switchboard/switchboardContext
 import MessageBox from "./display/MessageDisplay";
 import { useNavigate } from "react-router-dom";
 import MessageBar from "./messagebar/MessageBar";
+import './Switchboard.css';
 
 const Switchboard = () => {
     const navigate = useNavigate();
     const { clearMessages } = useContext(SwitchboardContext) as SwitchboardContextType;
     
     return (
-        <div>
-        <h1>Switchboard Example</h1>
+        <div className="switchboard">
+            <h1>Switchboard Example</h1>
             <MessageBox />
             <MessageBar />
             <button onClick={() => navigate("/")}>Back</button>
