@@ -1,0 +1,36 @@
+.image-container {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    margin-right: 2px;
+}
+
+.image {
+    position: relative;
+    display: inline-block;
+    object-fit: cover;
+    border-radius: 8px; /* Optional, for rounded corners */
+}
+
+.remove-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #ff0000;
+    border: none;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.remove-button:hover {
+    background-color: rgba(255, 0, 0, 0.8);
+    color: #fff;
+}

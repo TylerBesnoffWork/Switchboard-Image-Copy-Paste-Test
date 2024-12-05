@@ -1,0 +1,12 @@
+.image-bar{
+    height: 80px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 12px;
+}
+
+.image{
+    height: 100%;
+    margin-right: 2px;
+}

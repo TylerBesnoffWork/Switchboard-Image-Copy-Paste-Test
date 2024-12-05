@@ -1,0 +1,14 @@
+.image-bubble {
+    max-width: 100%;
+    margin: 10px;
+    border-radius: 15px;
+    display: inline-block;  /* Allows image to be inline with text or other elements */
+    align-self: flex-start;
+  }
+  
+  .bubble-image {
+    max-width: 30%;
+    height: auto;
+    border-radius: 10px;
+  }
+  

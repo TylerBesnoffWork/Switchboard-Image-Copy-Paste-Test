@@ -1,0 +1,25 @@
+.text-bubble {
+    max-width: 75%;
+    padding: 10px;
+    border-radius: 15px;
+    margin: 10px;
+    font-size: 14px;
+    word-wrap: break-word;
+    background-color: #e1f5fe;
+    align-self: flex-start;
+    border: 1px solid #b3e5fc;
+    color: #0277bd;
+  }
+  
+  .text-bubble p {
+    margin: 0;
+  }
+  
+  .text-bubble.user p {
+    text-align: left;
+  }
+  
+  .text-bubble.bot p {
+    text-align: right;
+  }
+  
